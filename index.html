@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css" />
+    <title>Snake Game</title>
+  </head>
+  <body>
+    <h1>Snake Game</h1>
+    <div id="gameSetting">
+      <h2>Game Setting</h2>
+      <label for="gameMode">Game Mode</label>
+      <select id="gameMode">
+        <option value="classic">Classic</option>
+        <option value="no-boundary">No Boundary</option>
+      </select>
+      <label for="difficulty">Difficulty</label>
+      <select id="difficulty">
+        <option value="easy">Easy</option>
+        <option value="normal">Normal</option>
+        <option value="hard">Hard</option>
+      </select>
+    </div>
+    <h1>
+      <button class="btn-grad" id="startGame">START GAME</button>
+    </h1>
+    <h2>Score <span id="scoreBoard"> 0 </span></h2>
+    <canvas id="board"></canvas>
+    <div>
+      <h2>Leaderboard</h2>
+    </div>
+    <script src="index.js"></script>
+  </body>
+</html>
