@@ -293,8 +293,8 @@ const gameLoop = () => {
 };
 
 const startGame = () => {
-  // document.getElementById("startGame").textContent = "Restart";
-  document.getElementById("startGame").style.visibility = "Hidden";
+  document.getElementById("startGame").textContent = "Restart";
+  // document.getElementById("startGame").style.visibility = "Hidden";
 
   gameSettings.gameMode = document.getElementById("gameMode").value;
   gameSettings.difficulty = document.getElementById("difficulty").value;
