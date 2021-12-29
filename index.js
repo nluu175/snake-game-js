@@ -32,6 +32,12 @@ class SnakePart {
   }
 }
 
+let inputsXVelocity = 0;
+let inputsYVelocity = 0;
+
+let previousXVelocity = 0;
+let previousYVelocity = 0;
+
 const snakeProps = {
   headX: noTiles / 2,
   headY: noTiles / 2,
@@ -75,42 +81,6 @@ const keyDown = (e) => {
   switch (e.keyCode) {
     // Direction Keys
     case 37:
-      // LEFT
-      if (snakeProps.velocityX === 1) {
-        return;
-      }
-      snakeProps.velocityX = -1;
-      snakeProps.velocityY = 0;
-      break;
-
-    case 38:
-      // UP
-      if (snakeProps.velocityY === 1) {
-        return;
-      }
-      snakeProps.velocityX = 0;
-      snakeProps.velocityY = -1;
-      break;
-
-    case 39:
-      // RIGHT
-      if (snakeProps.velocityX === -1) {
-        return;
-      }
-      snakeProps.velocityX = 1;
-      snakeProps.velocityY = 0;
-      break;
-
-    case 40:
-      // DOWN
-      if (snakeProps.velocityY === -1) {
-        return;
-      }
-      snakeProps.velocityX = 0;
-      snakeProps.velocityY = 1;
-      break;
-
-    // WASD
     case 65:
       // LEFT
       if (snakeProps.velocityX === 1) {
@@ -120,6 +90,7 @@ const keyDown = (e) => {
       snakeProps.velocityY = 0;
       break;
 
+    case 38:
     case 87:
       // UP
       if (snakeProps.velocityY === 1) {
@@ -129,6 +100,7 @@ const keyDown = (e) => {
       snakeProps.velocityY = -1;
       break;
 
+    case 39:
     case 68:
       // RIGHT
       if (snakeProps.velocityX === -1) {
@@ -138,6 +110,7 @@ const keyDown = (e) => {
       snakeProps.velocityY = 0;
       break;
 
+    case 40:
     case 83:
       // DOWN
       if (snakeProps.velocityY === -1) {
