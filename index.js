@@ -3,7 +3,6 @@ const ctx = canvas.getContext("2d");
 const scoreBoard = document.getElementById("scoreBoard");
 
 const BOARD_SIZE = 600;
-
 canvas.width = BOARD_SIZE;
 canvas.height = BOARD_SIZE;
 
@@ -13,15 +12,15 @@ const gameSettings = { gameMode: "classic", difficulty: "normal" };
 
 // - Game properties
 let noTiles = 30;
-// ---
 let speed = 7;
 let difficultyStep = 3;
-// ---
 let timePassed = 0;
 let tileSize = canvas.width / noTiles; // tileSize = 600 / 40 = 15
 let score = 0;
-
+// ---
 let gameDifficulty = {};
+// ---
+let gameStarted = false;
 // -----
 
 // - Snake Settings
@@ -32,21 +31,18 @@ class SnakePart {
   }
 }
 
-let inputsXVelocity = 0;
-let inputsYVelocity = 0;
-
-let previousXVelocity = 0;
-let previousYVelocity = 0;
-
+// Snake
 const snakeProps = {
   headX: noTiles / 2,
   headY: noTiles / 2,
+  previousHeadX: noTiles / 2,
+  previousHeadY: noTiles / 2,
   velocityX: 0,
   velocityY: 0,
 };
 
 let snakeTails = [];
-let tailLength = 2;
+let tailLength = 0;
 
 // The reason for noTiles - 1 is if we start drawing at (noTiles, noTiles), we will
 // end up with the food outside of the canvas (width + tileSize, height + tileSize)
@@ -119,10 +115,15 @@ const keyDown = (e) => {
       snakeProps.velocityX = 0;
       snakeProps.velocityY = 1;
       break;
+
+    case 13:
+      // Enter
+      if (!gameStarted) startGame();
+      break;
   }
 };
 
-// METHODS
+// Draw
 const drawBoard = () => {
   ctx.fillStyle = "black";
   ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -162,6 +163,19 @@ const drawFood = () => {
   );
 };
 
+const drawGameOverMessage = () => {
+  let gradient = ctx.createLinearGradient(0, 0, canvas.width, 0);
+  gradient.addColorStop("0", "red");
+  gradient.addColorStop("0.5", "pink");
+  gradient.addColorStop("1.0", "blue");
+
+  ctx.font = "50px JetBrains Mono";
+  ctx.fillStyle = gradient;
+
+  ctx.fillText("Game Over!", canvas.width / 2 - 140, canvas.height / 2);
+};
+
+// Game rules
 const updateSnakePosition = () => {
   snakeProps.headX = snakeProps.headX + snakeProps.velocityX;
   snakeProps.headY = snakeProps.headY + snakeProps.velocityY;
@@ -208,19 +222,7 @@ const checkEndGame = () => {
   return false;
 };
 
-const drawGameOverMessage = () => {
-  let gradient = ctx.createLinearGradient(0, 0, canvas.width, 0);
-  gradient.addColorStop("0", "red");
-  gradient.addColorStop("0.5", "pink");
-  gradient.addColorStop("1.0", "blue");
-
-  ctx.font = "50px JetBrains Mono";
-  ctx.fillStyle = gradient;
-
-  ctx.fillText("Game Over!", canvas.width / 2 - 140, canvas.height / 2);
-};
-
-// General Methods
+// Game Flow Control
 const newGame = () => {
   const name = prompt("Enter your name!!!");
   const playAgain = confirm("Do you want to play again?");
@@ -250,6 +252,10 @@ const newGame = () => {
   }
 };
 
+const setRecord = (name) => {
+  localStorage.setItem("name");
+};
+
 const gameLoop = () => {
   updateSnakePosition();
   if (checkEndGame()) {
@@ -266,6 +272,7 @@ const gameLoop = () => {
 };
 
 const startGame = () => {
+  gameStarted = true;
   document.getElementById("startGame").textContent = "Restart";
   // document.getElementById("startGame").style.visibility = "Hidden";
 
